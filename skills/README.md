@@ -71,6 +71,24 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   specify init my-project        # thêm --ai claude / --ai codex tuỳ agent; xem `specify integration list`
   ```
 
+### taste-skill — UI "có gu" (anti-slop frontend)
+
+- **Nguồn**: https://github.com/leonxlnx/taste-skill · License **MIT**
+- **Là gì**: Toolkit design giúp agent tạo **UI có gu, không bị templated/slop** — layout, typography,
+  motion, spacing mạnh hơn. Skill chính `design-taste-frontend` self-contained; có nhiều **biến thể**:
+  `soft`, `minimalist`, `brutalist`, `gpt-taste`, `imagegen-*`, `brandkit`.
+- **Dùng khi nào**: **lúc thiết kế/triển khai UI** — landing page, portfolio, redesign; muốn UI trông
+  chủ đích và tinh tế hơn. Có 3 "dial" chỉnh: Design Variance, Motion Intensity, Visual Density.
+- **⚠ Scope giới hạn**: chỉ landing/portfolio/redesign. **KHÔNG** hợp cho dashboard, data table,
+  mobile native, realtime collab UI — đừng gọi skill này cho mấy loại đó.
+- **Cài / dùng**:
+  ```bash
+  npx skills add https://github.com/leonxlnx/taste-skill     # Vercel Agent Skills CLI
+  ```
+  Hoặc copy thẳng thư mục skill mong muốn vào `.claude/skills/` (mỗi SKILL.md là markdown standalone).
+- **Lưu ý**: skill rất dài (~15k từ) và đang được maintain (v2 experimental) → **tham chiếu/cài từ nguồn**,
+  không copy verbatim vào repo này để tránh drift.
+
 ### gstack vs spec-kit — chọn cái nào?
 
 Không phải chọn 1 — hai bộ khác trọng tâm & khác agent. Chồng lấn chỉ ở khúc `plan → tasks`;
