@@ -5,6 +5,67 @@ Danh mục skill cho AI agent. Hai tầng: **Vendored skills** (viết trực ti
 
 ---
 
+## 0. Agent chọn skill nào & cài ra sao
+
+Có **2 cơ chế kích hoạt**:
+- **Vendored skills** → **agent TỰ chọn** theo `description` (miễn là file skill nằm trong skill-path của project).
+- **External toolkits** → **KHÔNG auto**. Agent chỉ dùng nếu (a) đã **cài** từ nguồn, và (b) có **luật routing**
+  trong `CLAUDE.md`/`AGENTS.md` của project (bảng dưới).
+
+### Bảng routing — "khi user muốn … → dùng …"
+
+| Ý định của user | Dùng | Loại | Cách kích hoạt |
+|---|---|---|---|
+| Chạy E2E test / automation browser / chụp screenshot | `playwright-e2e` | vendored | **Auto** theo description |
+| Đọc nội dung file PDF/Word/Excel/PPT/ảnh/audio… | `markitdown` | vendored | **Auto** theo description |
+| Chốt *"build gì & vì sao"*, product judgment, ship nhanh (Claude Code) | `gstack` | external | Manual: `/office-hours`, `/plan-*`, `/ship`, `/retro` |
+| Triển khai feature có kỷ luật, spec→code (kể cả **Codex**) | `spec-kit` | external | Manual: `/speckit.specify → plan → tasks → implement` |
+| Làm UI landing/portfolio/redesign "có gu" | `taste-skill` | external | Auto (nếu copy vào `.claude/skills/`) hoặc manual |
+| Việc marketing/growth (CRO, copy, SEO, ads…) | `marketingskills` | external | Manual: `/cro`, `/copywriting`, `/seo`… |
+| Biến nội dung/dữ liệu → HTML/deck/social-card | `html-anything` | tool | Chạy app riêng (localhost) |
+
+> Chồng lấn `plan→tasks`: gstack vs spec-kit — xem mục cuối. UI: `taste-skill` (code UI có gu) vs
+> `html-anything` (app sinh HTML từ nội dung), khác nhau.
+
+### Bảng cài đặt
+
+| Skill | Cài |
+|---|---|
+| `playwright-e2e` | `claude mcp add playwright npx @playwright/mcp@latest` |
+| `markitdown` | `pip install markitdown-mcp` + `claude mcp add markitdown markitdown-mcp` |
+| `gstack` | `git clone …/garrytan/gstack ~/.claude/skills/gstack && ./setup` |
+| `spec-kit` | `uv tool install specify-cli --from git+https://github.com/github/spec-kit.git` |
+| `taste-skill` | `npx skills add https://github.com/leonxlnx/taste-skill` |
+| `marketingskills` | `npx skills add coreyhaines31/marketingskills` |
+| `html-anything` | `git clone …/nexu-io/html-anything && pnpm i && pnpm -F @html-anything/next dev` |
+
+*(Lệnh chi tiết + lưu ý ở từng mục bên dưới.)*
+
+### Wire vào một project mới
+
+Để project mới "refer" tới repo này và agent route đúng:
+
+1. **Đưa vendored skills vào tầm với của agent** (chọn 1):
+   - Submodule: `git submodule add <repo-url> .agent-skills` rồi symlink/copy `skills/playwright-e2e`,
+     `skills/markitdown` vào `.claude/skills/`.
+   - Hoặc copy trực tiếp 2 thư mục skill đó vào `.claude/skills/`.
+2. **Cài external toolkit** bạn cần theo bảng cài đặt (chỉ cài cái dự án thực sự dùng — *Simplicity First*).
+3. **Dán đoạn sau vào `CLAUDE.md` (Claude Code) hoặc `AGENTS.md` (Codex) của project** để agent biết routing:
+
+   ```markdown
+   ## Skills & toolkits
+   Tuân theo bộ quy tắc & bảng routing tại <repo-url>/skills/README.md.
+   - E2E test / browser / screenshot → skill `playwright-e2e` (auto).
+   - Đọc file PDF/Office/ảnh/audio → skill `markitdown` (auto).
+   - Product planning / ship / retro → toolkit `gstack` (nếu đã cài): /office-hours, /plan-*, /ship, /retro.
+   - Spec-driven implement (kể cả Codex) → `spec-kit`: /speckit.*.
+   - UI landing/portfolio có gu → `taste-skill`. Marketing/growth → `marketingskills` (/cro, /copywriting…).
+   - Content → HTML/deck → chạy `html-anything`.
+   Chỉ dùng toolkit đã được cài; nếu chưa cài mà cần, báo user cài trước.
+   ```
+
+---
+
 ## Vendored skills
 
 Mỗi skill là 1 thư mục `skills/<ten>/SKILL.md` với frontmatter tối thiểu:

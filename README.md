@@ -31,3 +31,7 @@ Danh mục đầy đủ: [`skills/README.md`](skills/README.md).
 ### Codex / agent khác
 - Thêm repo này làm **git submodule**, rồi trong `AGENTS.md`/`CLAUDE.md` của project trỏ tới
   `CLAUDE.md` và thư mục `skills/` ở đây.
+
+### Agent chọn skill nào & cài đặt
+Xem [`skills/README.md` §0](skills/README.md#0-agent-chọn-skill-nào--cài-ra-sao): bảng **routing**
+(ý định → skill), bảng **cài đặt**, và đoạn **wiring** dán sẵn vào `CLAUDE.md`/`AGENTS.md` của project mới.
