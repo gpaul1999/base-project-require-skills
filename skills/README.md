@@ -81,6 +81,7 @@ Nội dung thân skill: cô đọng, actionable (đúng tinh thần *Simplicity 
 
 | Skill | Mô tả | Phase |
 |-------|-------|-------|
+| [`import-skills`](import-skills/SKILL.md) | Bootstrap catalog này vào project hiện tại: cài skill đã chọn + ghi routing block | Setup |
 | [`playwright-e2e`](playwright-e2e/SKILL.md) | E2E testing & browser automation qua Playwright MCP, có chụp screenshot làm bằng chứng | Test / QA |
 | [`markitdown`](markitdown/SKILL.md) | Chuyển PDF/Word/Excel/PPT/ảnh/audio/HTML… thành Markdown (MarkItDown MCP) để agent đọc được | Đọc tài liệu |
 

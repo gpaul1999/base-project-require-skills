@@ -3,6 +3,16 @@
 Kho tổng hợp **quy tắc chung + skill cần thiết** cho AI coding agent (Claude Code, Codex, …).
 Mục tiêu: một project mới chỉ cần *refer* tới repo này là có ngay bộ quy tắc và skill để bắt đầu.
 
+## Import bằng 1 lệnh
+
+Trong project bất kỳ, ra lệnh cho agent (ví dụ):
+
+> "Import skills từ `<repo-url>` — đọc `skills/import-skills/SKILL.md` và làm theo."
+
+Agent sẽ đọc skill [`import-skills`](skills/import-skills/SKILL.md), hỏi bạn chọn skill cần dùng, cài chúng
+(vendored + MCP server, external toolkit), rồi ghi routing block vào `CLAUDE.md`/`AGENTS.md` của project.
+Không cần bạn làm thủ công từng bước.
+
 ## Cấu trúc
 
 ```
