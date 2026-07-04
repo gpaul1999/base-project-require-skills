@@ -20,7 +20,7 @@ Nội dung thân skill: cô đọng, actionable (đúng tinh thần *Simplicity 
 
 | Skill | Mô tả | Phase |
 |-------|-------|-------|
-| _(chưa có)_ | | |
+| [`playwright-e2e`](playwright-e2e/SKILL.md) | E2E testing & browser automation qua Playwright MCP, có chụp screenshot làm bằng chứng | Test / QA |
 
 ---
 
