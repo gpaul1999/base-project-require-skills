@@ -15,9 +15,9 @@ user wants live browser testing or visual evidence.
 - "Take a screenshot of …", "capture the page after …".
 
 ## Setup (once per project/machine)
-Add the MCP server to Claude Code:
+Add the MCP server to Claude Code (pinned version for reproducibility):
 ```bash
-claude mcp add playwright npx @playwright/mcp@latest
+claude mcp add playwright npx @playwright/mcp@0.0.77
 ```
 Or add to the MCP config JSON:
 ```json
@@ -25,12 +25,12 @@ Or add to the MCP config JSON:
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["@playwright/mcp@latest"]
+      "args": ["@playwright/mcp@0.0.77"]
     }
   }
 }
 ```
-Useful args (append after `@playwright/mcp@latest`): `--headless` (CI/no display),
+Useful args (append after `@playwright/mcp@0.0.77`): `--headless` (CI/no display),
 `--isolated` (in-memory profile, don't persist), `--output-dir <dir>` (where screenshots/files go),
 `--caps vision,pdf,network` (enable extra capabilities).
 

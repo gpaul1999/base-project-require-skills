@@ -29,17 +29,19 @@ Có **2 cơ chế kích hoạt**:
 
 ### Bảng cài đặt
 
+Nguồn đã **fork về `gpaul1999/*` + pin** (xem mục Supply-chain). Package MS pin version.
+
 | Skill | Cài |
 |---|---|
-| `playwright-e2e` | `claude mcp add playwright npx @playwright/mcp@latest` |
-| `markitdown` | `pip install markitdown-mcp` + `claude mcp add markitdown markitdown-mcp` |
-| `gstack` | `git clone …/garrytan/gstack ~/.claude/skills/gstack && ./setup` |
+| `playwright-e2e` | `claude mcp add playwright npx @playwright/mcp@0.0.77` |
+| `markitdown` | `pip install markitdown-mcp==0.0.1a4` + `claude mcp add markitdown markitdown-mcp` |
+| `gstack` | `git clone …/gpaul1999/gstack ~/.claude/skills/gstack && ./setup` |
 | `spec-kit` | `uv tool install specify-cli --from git+https://github.com/github/spec-kit.git` |
-| `taste-skill` | `npx skills add https://github.com/leonxlnx/taste-skill` |
-| `marketingskills` | `npx skills add coreyhaines31/marketingskills` |
+| `taste-skill` | `npx skills add https://github.com/gpaul1999/taste-skill` |
+| `marketingskills` | `npx skills add gpaul1999/marketingskills` |
 | `html-anything` | `git clone …/nexu-io/html-anything && pnpm i && pnpm -F @html-anything/next dev` |
 
-*(Lệnh chi tiết + lưu ý ở từng mục bên dưới.)*
+*(Lệnh chi tiết + lưu ý ở từng mục bên dưới. Yêu cầu: đã fork sang `gpaul1999` — xem Supply-chain.)*
 
 ### Supply-chain: fork + pin (chống repo biến mất / đổi bậy)
 
@@ -50,36 +52,31 @@ hỏng/độc hại**. Phòng vệ:
 - **Fork thôi chưa đủ — phải PIN** 1 tag/commit đã review, vì fork sync theo upstream vẫn có thể kéo về bản xấu.
   `npx skills add @latest` / `git clone` HEAD = nuốt bất cứ thứ gì upstream đang có.
 
-| Toolkit | Upstream | Pin đề xuất | Fork? |
+Đã fork về `gpaul1999/*` và pin mốc dưới đây. **Fork chưa sync = snapshot đóng băng tại mốc pin** →
+tự động reproducible, không lệ thuộc upstream.
+
+| Toolkit | Upstream | Fork (đang dùng) | Mốc pin |
 |---|---|---|---|
-| `marketingskills` | `coreyhaines31/marketingskills` | tag **`v2.6.0`** | **Có** (owner cá nhân) |
-| `gstack` | `garrytan/gstack` | **commit SHA** (chưa có release) | **Có** (owner cá nhân) |
-| `taste-skill` | `leonxlnx/taste-skill` | **commit SHA** (chưa có release) | **Có** (owner cá nhân) |
-| `spec-kit` | `github/spec-kit` | tag release mới nhất | Tuỳ chọn (org lớn) |
-| `html-anything` | `nexu-io/html-anything` | tag/commit | Tuỳ chọn (org) |
-| `playwright-e2e` | `@playwright/mcp` (npm) | **pin version** (`@X.Y.Z`, không `@latest`) | Không cần |
-| `markitdown` | `markitdown-mcp` (pip) | **pin version** (`==X.Y.Z`) | Không cần |
+| `marketingskills` | `coreyhaines31/marketingskills` | `gpaul1999/marketingskills` | tag **`v2.6.0`** |
+| `gstack` | `garrytan/gstack` | `gpaul1999/gstack` | commit **`11de390`** |
+| `taste-skill` | `leonxlnx/taste-skill` | `gpaul1999/taste-skill` | commit **`06d6028`** |
+| `spec-kit` | `github/spec-kit` | *(chưa fork — org lớn, tuỳ chọn)* | tag release |
+| `html-anything` | `nexu-io/html-anything` | *(chưa fork — org, tuỳ chọn)* | tag/commit |
+| `playwright-e2e` | `@playwright/mcp` (npm) | — không cần fork | pin **`@0.0.77`** |
+| `markitdown` | `markitdown-mcp` (pip) | — không cần fork | pin **`==0.0.1a4`** |
 
-**Lệnh (chạy 1 lần bằng `gh`):**
+**Lệnh fork (chạy 1 lần — bắt buộc trước khi lệnh cài ở trên hoạt động):**
 ```bash
-# 1. Fork về account của bạn
-gh repo fork coreyhaines31/marketingskills --clone=false
-gh repo fork garrytan/gstack            --clone=false
-gh repo fork leonxlnx/taste-skill       --clone=false
-
-# 2. Lấy mốc pin cho repo chưa có release (copy SHA in ra)
-git ls-remote https://github.com/garrytan/gstack       HEAD
-git ls-remote https://github.com/leonxlnx/taste-skill  HEAD
-
-# 3. Pin version cho package MS
-npm view @playwright/mcp version        # rồi dùng @<version> thay @latest
-pip index versions markitdown-mcp       # rồi dùng ==<version>
+gh repo fork coreyhaines31/marketingskills --clone=false   # gpaul1999/marketingskills (giữ tag v2.6.0)
+gh repo fork garrytan/gstack               --clone=false   # gpaul1999/gstack       @ 11de390
+gh repo fork leonxlnx/taste-skill          --clone=false   # gpaul1999/taste-skill  @ 06d6028
 ```
+Mốc pin xác định lúc fork (04/07/2026):
+`gstack=11de390be1be6849eb9a15f91ff4922dd16c589a`, `taste-skill=06d6028b5c623016c59ce8536f578e5a1127b499`.
 
-Sau khi fork: **đổi lệnh cài trong catalog sang fork của bạn + mốc pin**, ví dụ
-`git clone --branch v2.6.0 https://github.com/<your-gh>/marketingskills` hoặc
-`git clone …/<your-gh>/gstack ~/.claude/skills/gstack && git -C ~/.claude/skills/gstack checkout <SHA> && ./setup`.
-Báo mình URL fork của bạn, mình sẽ repoint toàn bộ lệnh cài trong catalog sang chúng.
+**Quan trọng — đừng bấm "Sync fork"** cho tới khi bạn đã review & muốn cập nhật; giữ fork nguyên = giữ pin.
+Muốn cứng hơn nữa: sau fork, tạo branch/tag đóng băng đúng SHA rồi cài từ đó. Review nội dung skill (gstack,
+taste-skill là owner cá nhân) trước khi tin dùng — skill là chỉ thị agent sẽ chạy.
 
 ### Wire vào một project mới
 
@@ -133,7 +130,7 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
 
 ### gstack — AI Software Factory
 
-- **Nguồn**: https://github.com/garrytan/gstack · License **MIT**
+- **Nguồn**: fork `https://github.com/gpaul1999/gstack` @ `11de390` (upstream `garrytan/gstack`) · License **MIT**
 - **Là gì**: Toolkit biến Claude Code thành "virtual engineering team" — **23 skills + 8 power tools**
   phủ trọn vòng đời sản phẩm: **think → plan → build → review → test → ship → reflect**.
 - **Dùng ở phase nào**: **Xây dựng tính năng sản phẩm** (planning, review, QA, ship, retro) —
@@ -146,9 +143,9 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   - Ship: `/ship`, `/land-and-deploy`, `/document-release`
   - Reflect: `/retro`, `/learn`
   - Safety/automation: `/careful`, `/freeze`, `/guard`, `/autoplan`, `/browse`
-- **Cài (global)**:
+- **Cài (global, từ fork đã pin)**:
   ```bash
-  git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack \
+  git clone --single-branch --depth 1 https://github.com/gpaul1999/gstack.git ~/.claude/skills/gstack \
     && cd ~/.claude/skills/gstack && ./setup
   ```
   Chia sẻ trong team: `./setup --team` (bootstrap project, không vendor file, không drift version).
@@ -175,7 +172,7 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
 
 ### taste-skill — UI "có gu" (anti-slop frontend)
 
-- **Nguồn**: https://github.com/leonxlnx/taste-skill · License **MIT**
+- **Nguồn**: fork `https://github.com/gpaul1999/taste-skill` @ `06d6028` (upstream `leonxlnx/taste-skill`) · License **MIT**
 - **Là gì**: Toolkit design giúp agent tạo **UI có gu, không bị templated/slop** — layout, typography,
   motion, spacing mạnh hơn. Skill chính `design-taste-frontend` self-contained; có nhiều **biến thể**:
   `soft`, `minimalist`, `brutalist`, `gpt-taste`, `imagegen-*`, `brandkit`.
@@ -183,9 +180,9 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   chủ đích và tinh tế hơn. Có 3 "dial" chỉnh: Design Variance, Motion Intensity, Visual Density.
 - **⚠ Scope giới hạn**: chỉ landing/portfolio/redesign. **KHÔNG** hợp cho dashboard, data table,
   mobile native, realtime collab UI — đừng gọi skill này cho mấy loại đó.
-- **Cài / dùng**:
+- **Cài / dùng** (từ fork đã pin):
   ```bash
-  npx skills add https://github.com/leonxlnx/taste-skill     # Vercel Agent Skills CLI
+  npx skills add https://github.com/gpaul1999/taste-skill     # Vercel Agent Skills CLI
   ```
   Hoặc copy thẳng thư mục skill mong muốn vào `.claude/skills/` (mỗi SKILL.md là markdown standalone).
 - **Lưu ý**: skill rất dài (~15k từ) và đang được maintain (v2 experimental) → **tham chiếu/cài từ nguồn**,
@@ -193,15 +190,15 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
 
 ### marketingskills — bộ skill marketing (CRO, copy, SEO, growth)
 
-- **Nguồn**: https://github.com/coreyhaines31/marketingskills · License **MIT** · ~36k★ (tác giả Corey Haines)
+- **Nguồn**: fork `https://github.com/gpaul1999/marketingskills` @ `v2.6.0` (upstream `coreyhaines31/marketingskills`, ~36k★) · License **MIT**
 - **Là gì**: **60+ skill marketing** — CRO/onboarding/paywall, copywriting/cold-email/social, SEO/AI-search/
   programmatic SEO, ads, analytics/A-B test, churn, pricing, launch, RevOps… Mọi skill đọc chung file nền
   `product-marketing.md` trước khi chạy.
 - **Dùng khi nào**: cần agent làm **việc marketing/growth** — tối ưu landing, viết copy/email, audit SEO,
   lên plan launch, pricing… (gọi trực tiếp "optimize this landing page" hoặc `/cro`, `/copywriting`).
-- **Cài / dùng**:
+- **Cài / dùng** (từ fork đã pin `v2.6.0`):
   ```bash
-  npx skills add coreyhaines31/marketingskills     # hoặc dùng qua Claude Code plugin / git submodule
+  npx skills add gpaul1999/marketingskills     # hoặc dùng qua Claude Code plugin / git submodule
   ```
 - **Đã cân nhắc phương án khác**: `alirezarezvani/claude-skills` (19.9k★ nhưng là kho tạp 18 domain, marketing
   chỉ 48/354 skill — không curate riêng), `kostja94/marketing-skills` (701★, breadth lớn nhưng ít validate).

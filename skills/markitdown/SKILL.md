@@ -19,7 +19,7 @@ MarkItDown only when the format needs decoding.
 
 ## Setup (once)
 ```bash
-pip install markitdown-mcp
+pip install markitdown-mcp==0.0.1a4     # pinned version for reproducibility
 claude mcp add markitdown markitdown-mcp
 ```
 Or MCP config JSON (direct command — simplest for local files):
