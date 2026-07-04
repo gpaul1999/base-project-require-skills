@@ -52,3 +52,33 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   Chia sẻ trong team: `./setup --team` (bootstrap project, không vendor file, không drift version).
 - **Lưu ý**: mỗi `SKILL.md` của gstack phụ thuộc `lib/`, `scripts/`, section-files nội bộ →
   **không copy lẻ**; cài nguyên toolkit như trên.
+
+### spec-kit — Spec-Driven Development
+
+- **Nguồn**: https://github.com/github/spec-kit (GitHub) · Open-source
+- **Là gì**: Toolkit cho **Spec-Driven Development** — viết spec trước, rồi sinh plan → tasks →
+  implement một cách có hệ thống và **truy vết được**. Agent-agnostic: hỗ trợ **30+ AI agent**
+  (Claude Code, Codex/Copilot, Cursor, Gemini…).
+- **Dùng ở phase nào**: **Triển khai feature có kỷ luật** — khi cần spec rõ ràng, artifact bền vững,
+  hoặc khi làm với **Codex/agent khác** (gstack chỉ chạy Claude Code).
+- **Command tiêu biểu**: `/speckit.constitution` → `/speckit.specify` → `/speckit.plan` →
+  `/speckit.tasks` → `/speckit.implement` → `/speckit.converge` (phụ: `/speckit.clarify`,
+  `/speckit.analyze`, `/speckit.checklist`).
+- **Artifact sinh ra**: `constitution.md`, `spec.md`, `plan.md`, `tasks.md`.
+- **Cài** (cần `uv` + Python 3.11+):
+  ```bash
+  uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+  specify init my-project        # thêm --ai claude / --ai codex tuỳ agent; xem `specify integration list`
+  ```
+
+### gstack vs spec-kit — chọn cái nào?
+
+Không phải chọn 1 — hai bộ khác trọng tâm & khác agent. Chồng lấn chỉ ở khúc `plan → tasks`;
+**đừng chạy cả hai pipeline plan cùng lúc trên cùng một feature**.
+
+| Nhu cầu | Dùng |
+|---|---|
+| Chốt *"nên build gì & vì sao"*, product judgment, ship nhanh (Claude Code) | **gstack** (`/office-hours` …) |
+| Triển khai có kỷ luật, spec/artifact bền vững, truy vết | **spec-kit** |
+| Đang dùng **Codex / agent không phải Claude Code** | **spec-kit** (gstack không hỗ trợ) |
+| Feature lớn, muốn kết hợp | gstack `/office-hours` → spec-kit `/speckit.specify → … → implement` |
