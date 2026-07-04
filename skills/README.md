@@ -105,6 +105,24 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   chỉ 48/354 skill — không curate riêng), `kostja94/marketing-skills` (701★, breadth lớn nhưng ít validate).
   → coreyhaines31 là bản **thuần marketing, adoption cao nhất, tác giả domain-expert** ⇒ chọn.
 
+### html-anything — content → HTML đẹp (tool, không phải skill)
+
+- **Nguồn**: https://github.com/nexu-io/html-anything · License **Apache-2.0** · 7.5k★ (team Open Design)
+- **Là gì**: **Web app local-first** ("agentic HTML editor") — gọi CLI agent có sẵn (`claude`, `codex`…) để
+  biến **Markdown/CSV/JSON/SQL/text → HTML single-file** đẹp, ship-ready. **Không phải SKILL.md/skill library** —
+  là công cụ để *chạy*, không auto-load như các skill khác.
+- **Dùng khi nào**: cần biến nội dung/dữ liệu thành **HTML/deck/social-card/office-doc** trau chuốt nhanh
+  (75 template qua 9 surface, export HTML/PNG).
+- **⚠ Lưu ý**: design constraint **CJK-first** (font Trung/Nhật/Hàn), export nhắm nhiều nền tảng social TQ
+  (WeChat/Weibo/Xiaohongshu/Zhihu) → tối ưu cho ngữ cảnh CJK.
+- **Chạy**:
+  ```bash
+  git clone https://github.com/nexu-io/html-anything && cd html-anything
+  pnpm install && pnpm -F @html-anything/next dev      # → http://localhost:3000
+  ```
+- **Phân biệt với `taste-skill`**: `taste-skill` = *code UI trong project cho có gu*; `html-anything` =
+  *app riêng để sinh HTML/deck từ nội dung*. Bổ trợ nhau, không thay thế.
+
 ### gstack vs spec-kit — chọn cái nào?
 
 Không phải chọn 1 — hai bộ khác trọng tâm & khác agent. Chồng lấn chỉ ở khúc `plan → tasks`;
