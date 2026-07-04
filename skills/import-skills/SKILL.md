@@ -38,3 +38,5 @@ tự dùng đúng skill về sau. Chạy khi user ra lệnh kiểu "import skill
 - Chỉ đụng vào skill user đã chọn; không cài dư.
 - Không chạy lệnh cài/mạng khi chưa được user xác nhận.
 - Lệnh cài đọc từ `skills/README.md §0`, không hardcode từ trí nhớ → luôn đồng bộ khi catalog đổi.
+- **Ưu tiên nguồn fork + pin** nếu catalog đã cấu hình (mục §0 "Supply-chain") — cài từ fork của user tại
+  tag/commit đã pin thay vì upstream `@latest`, để reproducible và tránh upstream biến mất/đổi bậy.

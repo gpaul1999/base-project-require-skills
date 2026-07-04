@@ -41,6 +41,46 @@ Có **2 cơ chế kích hoạt**:
 
 *(Lệnh chi tiết + lưu ý ở từng mục bên dưới.)*
 
+### Supply-chain: fork + pin (chống repo biến mất / đổi bậy)
+
+External toolkit là repo bên thứ ba → có thể **chuyển private, bị xoá, đổi license, hoặc push update
+hỏng/độc hại**. Phòng vệ:
+
+- **License MIT/Apache-2.0 không thu hồi được** với bản đã fork → **fork ngay** là khoá quyền dùng bản đó vĩnh viễn.
+- **Fork thôi chưa đủ — phải PIN** 1 tag/commit đã review, vì fork sync theo upstream vẫn có thể kéo về bản xấu.
+  `npx skills add @latest` / `git clone` HEAD = nuốt bất cứ thứ gì upstream đang có.
+
+| Toolkit | Upstream | Pin đề xuất | Fork? |
+|---|---|---|---|
+| `marketingskills` | `coreyhaines31/marketingskills` | tag **`v2.6.0`** | **Có** (owner cá nhân) |
+| `gstack` | `garrytan/gstack` | **commit SHA** (chưa có release) | **Có** (owner cá nhân) |
+| `taste-skill` | `leonxlnx/taste-skill` | **commit SHA** (chưa có release) | **Có** (owner cá nhân) |
+| `spec-kit` | `github/spec-kit` | tag release mới nhất | Tuỳ chọn (org lớn) |
+| `html-anything` | `nexu-io/html-anything` | tag/commit | Tuỳ chọn (org) |
+| `playwright-e2e` | `@playwright/mcp` (npm) | **pin version** (`@X.Y.Z`, không `@latest`) | Không cần |
+| `markitdown` | `markitdown-mcp` (pip) | **pin version** (`==X.Y.Z`) | Không cần |
+
+**Lệnh (chạy 1 lần bằng `gh`):**
+```bash
+# 1. Fork về account của bạn
+gh repo fork coreyhaines31/marketingskills --clone=false
+gh repo fork garrytan/gstack            --clone=false
+gh repo fork leonxlnx/taste-skill       --clone=false
+
+# 2. Lấy mốc pin cho repo chưa có release (copy SHA in ra)
+git ls-remote https://github.com/garrytan/gstack       HEAD
+git ls-remote https://github.com/leonxlnx/taste-skill  HEAD
+
+# 3. Pin version cho package MS
+npm view @playwright/mcp version        # rồi dùng @<version> thay @latest
+pip index versions markitdown-mcp       # rồi dùng ==<version>
+```
+
+Sau khi fork: **đổi lệnh cài trong catalog sang fork của bạn + mốc pin**, ví dụ
+`git clone --branch v2.6.0 https://github.com/<your-gh>/marketingskills` hoặc
+`git clone …/<your-gh>/gstack ~/.claude/skills/gstack && git -C ~/.claude/skills/gstack checkout <SHA> && ./setup`.
+Báo mình URL fork của bạn, mình sẽ repoint toàn bộ lệnh cài trong catalog sang chúng.
+
 ### Wire vào một project mới
 
 Để project mới "refer" tới repo này và agent route đúng:
