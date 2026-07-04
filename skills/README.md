@@ -89,6 +89,22 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
 - **Lưu ý**: skill rất dài (~15k từ) và đang được maintain (v2 experimental) → **tham chiếu/cài từ nguồn**,
   không copy verbatim vào repo này để tránh drift.
 
+### marketingskills — bộ skill marketing (CRO, copy, SEO, growth)
+
+- **Nguồn**: https://github.com/coreyhaines31/marketingskills · License **MIT** · ~36k★ (tác giả Corey Haines)
+- **Là gì**: **60+ skill marketing** — CRO/onboarding/paywall, copywriting/cold-email/social, SEO/AI-search/
+  programmatic SEO, ads, analytics/A-B test, churn, pricing, launch, RevOps… Mọi skill đọc chung file nền
+  `product-marketing.md` trước khi chạy.
+- **Dùng khi nào**: cần agent làm **việc marketing/growth** — tối ưu landing, viết copy/email, audit SEO,
+  lên plan launch, pricing… (gọi trực tiếp "optimize this landing page" hoặc `/cro`, `/copywriting`).
+- **Cài / dùng**:
+  ```bash
+  npx skills add coreyhaines31/marketingskills     # hoặc dùng qua Claude Code plugin / git submodule
+  ```
+- **Đã cân nhắc phương án khác**: `alirezarezvani/claude-skills` (19.9k★ nhưng là kho tạp 18 domain, marketing
+  chỉ 48/354 skill — không curate riêng), `kostja94/marketing-skills` (701★, breadth lớn nhưng ít validate).
+  → coreyhaines31 là bản **thuần marketing, adoption cao nhất, tác giả domain-expert** ⇒ chọn.
+
 ### gstack vs spec-kit — chọn cái nào?
 
 Không phải chọn 1 — hai bộ khác trọng tâm & khác agent. Chồng lấn chỉ ở khúc `plan → tasks`;
