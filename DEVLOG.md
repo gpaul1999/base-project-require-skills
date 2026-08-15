@@ -2,6 +2,7 @@
 
 Nhật ký thay đổi. 1 dòng / task. Entry > 7 ngày tự dọn; > 30 dòng thì nén thành dòng tóm tắt.
 
+- 2026-08-15: Đính chính 2 điểm ở mục `mattpocock` — (a) nhóm ✅ **vendor lẻ được** (7 skill tự chứa, `CONTEXT.md` là của project đích chứ không phải repo gốc), (b) skill `code-review` **trùng tên built-in Claude Code** nên bị che, phải đổi tên mới dùng được. Ghi giải pháp tạm khi không fork được: vendor snapshot MIT tại `8b78b53`.
 - 2026-08-15: Verify supply-chain pin — gstack/taste-skill/marketingskills: HEAD khớp đúng commit đã pin ✅. `gpaul1999/skills` (mattpocock) **không truy cập được** (404 anonymous) → đánh dấu ⏸ ở catalog, ghi việc cần làm (fork lại + public + pin SHA mới).
 - 2026-08-15: Ghi chú `harness` (revfactory, orchestration Layer 3) như mục nâng cao tuỳ chọn — không xung đột cứng gstack (khác tầng) nhưng chồng khái niệm "team"; chưa vào core, chưa fork/route.
 - 2026-08-15: Thêm external toolkit `mattpocock` (fork gpaul1999/skills @ 8b78b53) — lọc chỉ nhóm coding-discipline (tdd, diagnosing-bugs, code-review, domain-modeling, codebase-design, research, resolving-merge-conflicts); routing tránh nhóm spec-pipeline trùng spec-kit. Đồng thời vá pin marketingskills v2.6.0→30dbd7f (bản sửa bị sót khỏi PR#1 đã merge).

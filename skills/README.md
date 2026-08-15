@@ -48,7 +48,7 @@ Nguồn đã **fork về `gpaul1999/*` + pin** (xem mục Supply-chain). Package
 | `taste-skill` | `npx skills add https://github.com/gpaul1999/taste-skill` |
 | `marketingskills` | `npx skills add gpaul1999/marketingskills` |
 | `html-anything` | `git clone …/nexu-io/html-anything && pnpm i && pnpm -F @html-anything/next dev` |
-| `mattpocock` | ⏸ **chưa cài được** — fork `gpaul1999/skills` không truy cập (xem Supply-chain) |
+| `mattpocock` | ⏸ fork `gpaul1999/skills` không truy cập → vendor snapshot upstream `8b78b53` (xem Supply-chain) |
 
 *(Lệnh chi tiết + lưu ý ở từng mục bên dưới. Yêu cầu: đã fork sang `gpaul1999` — xem Supply-chain.)*
 
@@ -89,8 +89,16 @@ Mốc pin (đã verify — mỗi fork đóng băng tại main HEAD của nó; Gi
 
 **⏸ 2026-08-15 — `gpaul1999/skills` (mattpocock) không truy cập được.** `git ls-remote` trả về auth prompt
 = 404 với anonymous → fork chưa tồn tại hoặc đang private, lệnh cài sẽ fail. Upstream `mattpocock/skills`
-vẫn công khai bình thường. **Cần làm:** `gh repo fork mattpocock/skills --clone=false`, để repo public,
-rồi cập nhật mốc pin ở bảng trên theo SHA thực tế của fork.
+vẫn công khai bình thường, và HEAD của nó **đúng bằng** `8b78b53` — tức mốc pin trong bảng vẫn hợp lệ.
+**Cần user tự làm** (agent trong session Claude Code Remote không fork được: token chỉ có quyền trên
+repo của session, `create_repository` trả 403):
+```bash
+gh repo fork mattpocock/skills --clone=false   # để public, rồi repoint bảng trên theo SHA của fork
+```
+**Giải pháp tạm đang dùng ở `disclosure-ops`:** vendor snapshot nhóm ✅ tại `8b78b53` vào
+`.claude/skills/` kèm `LICENSE-mattpocock` + `VENDORED.md`. MIT cho phép, và bản sao nằm trong repo
+user kiểm soát → đạt cùng mục tiêu supply-chain như fork (miễn nhiễm upstream biến mất/đổi bậy).
+
 *(Ba fork còn lại đã verify 2026-08-15: HEAD khớp đúng commit đã pin.)*
 
 **Quan trọng — đừng bấm "Sync fork"** cho tới khi bạn đã review & muốn cập nhật; giữ fork nguyên = giữ pin.
@@ -264,7 +272,15 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   npx skills add https://github.com/gpaul1999/skills     # cài cả bộ; chỉ dùng nhóm ✅ theo routing ở §0
   ```
 - **Lưu ý**: skill trong bộ **phụ thuộc lẫn nhau** (primitive `grilling`, file `CONTEXT.md`, skill `setup-*`)
-  → cài cả bộ, đừng vendor lẻ; việc "không thừa" xử lý bằng **routing** (chỉ gọi nhóm ✅), không phải xoá file.
+  → mặc định cài cả bộ; việc "không thừa" xử lý bằng **routing** (chỉ gọi nhóm ✅), không phải xoá file.
+- **⚠️ Trùng tên với built-in**: skill `code-review` của bộ này **trùng `name` với skill `code-review`
+  built-in của Claude Code** → built-in thắng, bản mattpocock bị che và không bao giờ load. Muốn dùng
+  cả hai thì đổi `name` + tên thư mục (ở `disclosure-ops` đặt là `code-review-2axis`).
+- **Đính chính 2026-08-15 — nhóm ✅ vendor lẻ được.** Đã kiểm tra 7 skill nhóm ✅ tại `8b78b53`:
+  mỗi thư mục tự chứa (có `agents/`, `scripts/`, sub-doc riêng), không skill nào phụ thuộc `grilling`
+  hay `setup-*`. `CONTEXT.md` mà `tdd`/`domain-modeling`/`diagnosing-bugs` nhắc tới là glossary của
+  **project đích** (do chính `domain-modeling` sinh ra), không phải file của repo mattpocock.
+  Tổng ~160KB → vendor nhóm ✅ vào `.claude/skills/` của project là hợp lệ khi không fork được.
 
 ### gstack vs spec-kit — chọn cái nào?
 
