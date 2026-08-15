@@ -2,7 +2,8 @@
 
 Nhật ký thay đổi. 1 dòng / task. Entry > 7 ngày tự dọn; > 30 dòng thì nén thành dòng tóm tắt.
 
-- 2026-07-04: Repoint toàn bộ lệnh cài sang fork gpaul1999/* + pin cụ thể (gstack@11de390, taste-skill@06d6028, marketingskills@v2.6.0, playwright@0.0.77, markitdown==0.0.1a4). Review cuối: catalog nhất quán, sẵn sàng v1.0.
+- 2026-08-15: Thêm external toolkit `mattpocock` (fork gpaul1999/skills @ 8b78b53) — lọc chỉ nhóm coding-discipline (tdd, diagnosing-bugs, code-review, domain-modeling, codebase-design, research, resolving-merge-conflicts); routing tránh nhóm spec-pipeline trùng spec-kit. Đồng thời vá pin marketingskills v2.6.0→30dbd7f (bản sửa bị sót khỏi PR#1 đã merge).
+- 2026-07-04: Repoint toàn bộ lệnh cài sang fork gpaul1999/* + pin cụ thể (gstack@11de390, taste-skill@06d6028, marketingskills@30dbd7f, playwright@0.0.77, markitdown==0.0.1a4). Review cuối: catalog nhất quán, sẵn sàng v1.0.
 - 2026-07-04: Thêm §0 "Supply-chain: fork + pin" — bảng pin (marketingskills v2.6.0; gstack/taste-skill pin commit SHA; playwright/markitdown pin version) + lệnh fork; import-skills ưu tiên nguồn fork+pin.
 - 2026-07-04: Thêm vendored skill `import-skills` — agent tự đọc & thực thi bootstrap (cài skill đã chọn + ghi routing block vào CLAUDE.md/AGENTS.md); root README thêm mục "Import bằng 1 lệnh".
 - 2026-07-04: Thêm §0 "Agent chọn skill nào & cài ra sao" — bảng routing (ý định→skill), bảng cài đặt, đoạn wiring dán vào CLAUDE.md/AGENTS.md; giải thích 2 cơ chế auto (vendored) vs manual (external).

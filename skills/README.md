@@ -23,9 +23,17 @@ Có **2 cơ chế kích hoạt**:
 | Làm UI landing/portfolio/redesign "có gu" | `taste-skill` | external | Auto (nếu copy vào `.claude/skills/`) hoặc manual |
 | Việc marketing/growth (CRO, copy, SEO, ads…) | `marketingskills` | external | Manual: `/cro`, `/copywriting`, `/seo`… |
 | Biến nội dung/dữ liệu → HTML/deck/social-card | `html-anything` | tool | Chạy app riêng (localhost) |
+| Viết test trước / TDD unit | `mattpocock` → `tdd` | external | Manual |
+| Debug bug khó, bài bản (red→fix) | `mattpocock` → `diagnosing-bugs` | external | Manual |
+| Review code (2 trục: Standards + Spec) | `mattpocock` → `code-review` | external | Manual |
+| Thiết kế module sâu / kiến trúc / domain model | `mattpocock` → `domain-modeling`, `codebase-design` | external | Manual |
+| Điều tra câu hỏi, có trích dẫn nguồn | `mattpocock` → `research` | external | Manual |
+| Xử lý git merge conflict theo intent | `mattpocock` → `resolving-merge-conflicts` | external | Manual |
 
 > Chồng lấn `plan→tasks`: gstack vs spec-kit — xem mục cuối. UI: `taste-skill` (code UI có gu) vs
 > `html-anything` (app sinh HTML từ nội dung), khác nhau.
+> **mattpocock** lấp tầng *coding discipline* (TDD/debug/review/design). **Tránh** dùng nhóm spec-pipeline
+> của nó (`to-spec`, `to-tickets`, `wayfinder`, `implement`, `triage`) — đã có **spec-kit** lo, để không thừa.
 
 ### Bảng cài đặt
 
@@ -40,6 +48,7 @@ Nguồn đã **fork về `gpaul1999/*` + pin** (xem mục Supply-chain). Package
 | `taste-skill` | `npx skills add https://github.com/gpaul1999/taste-skill` |
 | `marketingskills` | `npx skills add gpaul1999/marketingskills` |
 | `html-anything` | `git clone …/nexu-io/html-anything && pnpm i && pnpm -F @html-anything/next dev` |
+| `mattpocock` | `npx skills add https://github.com/gpaul1999/skills` |
 
 *(Lệnh chi tiết + lưu ý ở từng mục bên dưới. Yêu cầu: đã fork sang `gpaul1999` — xem Supply-chain.)*
 
@@ -57,9 +66,10 @@ tự động reproducible, không lệ thuộc upstream.
 
 | Toolkit | Upstream | Fork (đang dùng) | Mốc pin |
 |---|---|---|---|
-| `marketingskills` | `coreyhaines31/marketingskills` | `gpaul1999/marketingskills` | tag **`v2.6.0`** |
+| `marketingskills` | `coreyhaines31/marketingskills` | `gpaul1999/marketingskills` | commit **`30dbd7f`** (fork chỉ copy main, không kèm tag `v2.6.0`) |
 | `gstack` | `garrytan/gstack` | `gpaul1999/gstack` | commit **`11de390`** |
 | `taste-skill` | `leonxlnx/taste-skill` | `gpaul1999/taste-skill` | commit **`06d6028`** |
+| `mattpocock` | `mattpocock/skills` | `gpaul1999/skills` | commit **`8b78b53`** (mới hơn tag `v1.2.3` vài commit) |
 | `spec-kit` | `github/spec-kit` | *(chưa fork — org lớn, tuỳ chọn)* | tag release |
 | `html-anything` | `nexu-io/html-anything` | *(chưa fork — org, tuỳ chọn)* | tag/commit |
 | `playwright-e2e` | `@playwright/mcp` (npm) | — không cần fork | pin **`@0.0.77`** |
@@ -67,12 +77,15 @@ tự động reproducible, không lệ thuộc upstream.
 
 **Lệnh fork (chạy 1 lần — bắt buộc trước khi lệnh cài ở trên hoạt động):**
 ```bash
-gh repo fork coreyhaines31/marketingskills --clone=false   # gpaul1999/marketingskills (giữ tag v2.6.0)
-gh repo fork garrytan/gstack               --clone=false   # gpaul1999/gstack       @ 11de390
-gh repo fork leonxlnx/taste-skill          --clone=false   # gpaul1999/taste-skill  @ 06d6028
+gh repo fork coreyhaines31/marketingskills --clone=false   # gpaul1999/marketingskills @ 30dbd7f
+gh repo fork garrytan/gstack               --clone=false   # gpaul1999/gstack          @ 11de390
+gh repo fork leonxlnx/taste-skill          --clone=false   # gpaul1999/taste-skill     @ 06d6028
+gh repo fork mattpocock/skills             --clone=false   # gpaul1999/skills          @ 8b78b53
 ```
-Mốc pin xác định lúc fork (04/07/2026):
-`gstack=11de390be1be6849eb9a15f91ff4922dd16c589a`, `taste-skill=06d6028b5c623016c59ce8536f578e5a1127b499`.
+Mốc pin (đã verify — mỗi fork đóng băng tại main HEAD của nó; GitHub fork không copy tag nên pin theo commit):
+`gstack=11de390be1be6849eb9a15f91ff4922dd16c589a`, `taste-skill=06d6028b5c623016c59ce8536f578e5a1127b499`,
+`marketingskills=30dbd7f793b86f0ec2f007757b333afac93c24db` (mới hơn tag `v2.6.0`),
+`mattpocock=8b78b531ab965735c5dc74f6f7a219e1e37326df` (mới hơn tag `v1.2.3`). Muốn đúng release thì push tag sang fork thủ công.
 
 **Quan trọng — đừng bấm "Sync fork"** cho tới khi bạn đã review & muốn cập nhật; giữ fork nguyên = giữ pin.
 Muốn cứng hơn nữa: sau fork, tạo branch/tag đóng băng đúng SHA rồi cài từ đó. Review nội dung skill (gstack,
@@ -98,6 +111,9 @@ taste-skill là owner cá nhân) trước khi tin dùng — skill là chỉ th�
    - Spec-driven implement (kể cả Codex) → `spec-kit`: /speckit.*.
    - UI landing/portfolio có gu → `taste-skill`. Marketing/growth → `marketingskills` (/cro, /copywriting…).
    - Content → HTML/deck → chạy `html-anything`.
+   - Coding discipline (TDD, debug, review code, thiết kế module, research, merge conflict) → `mattpocock`
+     (nhóm: tdd, diagnosing-bugs, code-review, domain-modeling, codebase-design, research, resolving-merge-conflicts).
+     TRÁNH nhóm spec-pipeline của mattpocock (to-spec/to-tickets/implement…) — đã có spec-kit.
    Chỉ dùng toolkit đã được cài; nếu chưa cài mà cần, báo user cài trước.
    ```
 
@@ -190,15 +206,15 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
 
 ### marketingskills — bộ skill marketing (CRO, copy, SEO, growth)
 
-- **Nguồn**: fork `https://github.com/gpaul1999/marketingskills` @ `v2.6.0` (upstream `coreyhaines31/marketingskills`, ~36k★) · License **MIT**
+- **Nguồn**: fork `https://github.com/gpaul1999/marketingskills` @ `30dbd7f` (upstream `coreyhaines31/marketingskills`, ~36k★) · License **MIT**
 - **Là gì**: **60+ skill marketing** — CRO/onboarding/paywall, copywriting/cold-email/social, SEO/AI-search/
   programmatic SEO, ads, analytics/A-B test, churn, pricing, launch, RevOps… Mọi skill đọc chung file nền
   `product-marketing.md` trước khi chạy.
 - **Dùng khi nào**: cần agent làm **việc marketing/growth** — tối ưu landing, viết copy/email, audit SEO,
   lên plan launch, pricing… (gọi trực tiếp "optimize this landing page" hoặc `/cro`, `/copywriting`).
-- **Cài / dùng** (từ fork đã pin `v2.6.0`):
+- **Cài / dùng** (từ fork đã pin `30dbd7f`):
   ```bash
-  npx skills add gpaul1999/marketingskills     # hoặc dùng qua Claude Code plugin / git submodule
+  npx skills add gpaul1999/marketingskills     # kéo main của fork = 30dbd7f (đã đóng băng)
   ```
 - **Đã cân nhắc phương án khác**: `alirezarezvani/claude-skills` (19.9k★ nhưng là kho tạp 18 domain, marketing
   chỉ 48/354 skill — không curate riêng), `kostja94/marketing-skills` (701★, breadth lớn nhưng ít validate).
@@ -221,6 +237,28 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
   ```
 - **Phân biệt với `taste-skill`**: `taste-skill` = *code UI trong project cho có gu*; `html-anything` =
   *app riêng để sinh HTML/deck từ nội dung*. Bổ trợ nhau, không thay thế.
+
+### mattpocock — kỷ luật engineering (tầng coding)
+
+- **Nguồn**: fork `https://github.com/gpaul1999/skills` @ `8b78b53` (upstream `mattpocock/skills`, Matt Pocock) · License **MIT**
+- **Là gì**: Bộ ~24 skill về **kỷ luật engineering khi code với AI**. Lấp đúng tầng *coding discipline* mà bộ
+  hiện tại thiếu (gstack lo product, spec-kit lo spec→plan).
+- **✅ Chỉ dùng nhóm lấp gap** (đã lọc để không thừa):
+  - `tdd` — red→green→refactor, viết test trước.
+  - `diagnosing-bugs` — vòng lặp debug bài bản cho bug khó.
+  - `code-review` — review 2 trục (Standards + Spec) qua sub-agent song song.
+  - `domain-modeling` + `codebase-design` — dựng domain model, thiết kế module sâu / interface nhỏ.
+  - `research` — điều tra câu hỏi theo primary source, xuất Markdown có trích dẫn.
+  - `resolving-merge-conflicts` — gỡ git conflict theo intent, từng hunk.
+- **⛔ TRÁNH nhóm trùng** (đã có tool khác lo, dùng sẽ thừa/chồng chéo):
+  `to-spec`, `to-tickets`, `wayfinder`, `implement`, `triage`, `setup-*` → **spec-kit** đã lo pipeline spec→plan→tasks→implement.
+  `prototype` → đã có `taste-skill`/`html-anything`.
+- **Cài / dùng** (từ fork đã pin):
+  ```bash
+  npx skills add https://github.com/gpaul1999/skills     # cài cả bộ; chỉ dùng nhóm ✅ theo routing ở §0
+  ```
+- **Lưu ý**: skill trong bộ **phụ thuộc lẫn nhau** (primitive `grilling`, file `CONTEXT.md`, skill `setup-*`)
+  → cài cả bộ, đừng vendor lẻ; việc "không thừa" xử lý bằng **routing** (chỉ gọi nhóm ✅), không phải xoá file.
 
 ### gstack vs spec-kit — chọn cái nào?
 
