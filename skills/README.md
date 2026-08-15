@@ -271,3 +271,21 @@ Không phải chọn 1 — hai bộ khác trọng tâm & khác agent. Chồng l�
 | Triển khai có kỷ luật, spec/artifact bền vững, truy vết | **spec-kit** |
 | Đang dùng **Codex / agent không phải Claude Code** | **spec-kit** (gstack không hỗ trợ) |
 | Feature lớn, muốn kết hợp | gstack `/office-hours` → spec-kit `/speckit.specify → … → implement` |
+
+---
+
+## Orchestration nâng cao (tuỳ chọn — CHƯA thuộc core)
+
+**`harness`** (`revfactory/harness`, Apache-2.0, ~8.8k★) — *meta-skill Layer 3*: phân tích domain →
+thiết kế "agent team" → sinh agent/skill vào `.claude/agents/` & `.claude/skills/`, theo 6 pattern
+(pipeline, fan-out, supervisor, producer-reviewer, expert-pool, hierarchical).
+
+- **Vị trí**: ngồi **TRÊN** các toolkit thực thi. `harness` lo *"ai phối hợp & thế nào"*; gstack/spec-kit/
+  mattpocock lo *"làm gì"*. Cách kết hợp hợp lý: **harness (điều phối) → gstack/spec-kit/mattpocock (thực thi)**.
+- **Khi nào cân nhắc**: việc lớn, nhiều agent song song, chạy dài, cần cấu trúc team rõ. Project khởi đầu
+  bình thường **không cần** — để gọn (*Simplicity First*).
+- **⚠ Nếu dùng**: (1) **chồng khái niệm "team" với gstack** (gstack đã mô phỏng eng team) → phân vai rõ,
+  đừng để 2 mô hình team đá nhau; (2) harness **sinh file** vào `.claude/` → coi chừng đè skill vendored /
+  toolkit đã cài.
+- **Trạng thái**: chỉ ghi nhận làm đường nâng cấp. Chưa fork/pin, chưa route mặc định. Khi nào thực sự cần
+  orchestration đa agent thì mới cân nhắc đưa lên thành external toolkit đầy đủ.
