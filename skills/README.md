@@ -48,7 +48,7 @@ Nguồn đã **fork về `gpaul1999/*` + pin** (xem mục Supply-chain). Package
 | `taste-skill` | `npx skills add https://github.com/gpaul1999/taste-skill` |
 | `marketingskills` | `npx skills add gpaul1999/marketingskills` |
 | `html-anything` | `git clone …/nexu-io/html-anything && pnpm i && pnpm -F @html-anything/next dev` |
-| `mattpocock` | `npx skills add https://github.com/gpaul1999/skills` |
+| `mattpocock` | ⏸ **chưa cài được** — fork `gpaul1999/skills` không truy cập (xem Supply-chain) |
 
 *(Lệnh chi tiết + lưu ý ở từng mục bên dưới. Yêu cầu: đã fork sang `gpaul1999` — xem Supply-chain.)*
 
@@ -69,7 +69,7 @@ tự động reproducible, không lệ thuộc upstream.
 | `marketingskills` | `coreyhaines31/marketingskills` | `gpaul1999/marketingskills` | commit **`30dbd7f`** (fork chỉ copy main, không kèm tag `v2.6.0`) |
 | `gstack` | `garrytan/gstack` | `gpaul1999/gstack` | commit **`11de390`** |
 | `taste-skill` | `leonxlnx/taste-skill` | `gpaul1999/taste-skill` | commit **`06d6028`** |
-| `mattpocock` | `mattpocock/skills` | `gpaul1999/skills` | commit **`8b78b53`** (mới hơn tag `v1.2.3` vài commit) |
+| `mattpocock` | `mattpocock/skills` | `gpaul1999/skills` ⏸ **không truy cập được** | commit **`8b78b53`** (chưa verify được) |
 | `spec-kit` | `github/spec-kit` | *(chưa fork — org lớn, tuỳ chọn)* | tag release |
 | `html-anything` | `nexu-io/html-anything` | *(chưa fork — org, tuỳ chọn)* | tag/commit |
 | `playwright-e2e` | `@playwright/mcp` (npm) | — không cần fork | pin **`@0.0.77`** |
@@ -86,6 +86,12 @@ Mốc pin (đã verify — mỗi fork đóng băng tại main HEAD của nó; Gi
 `gstack=11de390be1be6849eb9a15f91ff4922dd16c589a`, `taste-skill=06d6028b5c623016c59ce8536f578e5a1127b499`,
 `marketingskills=30dbd7f793b86f0ec2f007757b333afac93c24db` (mới hơn tag `v2.6.0`),
 `mattpocock=8b78b531ab965735c5dc74f6f7a219e1e37326df` (mới hơn tag `v1.2.3`). Muốn đúng release thì push tag sang fork thủ công.
+
+**⏸ 2026-08-15 — `gpaul1999/skills` (mattpocock) không truy cập được.** `git ls-remote` trả về auth prompt
+= 404 với anonymous → fork chưa tồn tại hoặc đang private, lệnh cài sẽ fail. Upstream `mattpocock/skills`
+vẫn công khai bình thường. **Cần làm:** `gh repo fork mattpocock/skills --clone=false`, để repo public,
+rồi cập nhật mốc pin ở bảng trên theo SHA thực tế của fork.
+*(Ba fork còn lại đã verify 2026-08-15: HEAD khớp đúng commit đã pin.)*
 
 **Quan trọng — đừng bấm "Sync fork"** cho tới khi bạn đã review & muốn cập nhật; giữ fork nguyên = giữ pin.
 Muốn cứng hơn nữa: sau fork, tạo branch/tag đóng băng đúng SHA rồi cài từ đó. Review nội dung skill (gstack,
@@ -253,7 +259,7 @@ Bộ skill lớn có installer/phụ thuộc riêng. Project cài thẳng từ n
 - **⛔ TRÁNH nhóm trùng** (đã có tool khác lo, dùng sẽ thừa/chồng chéo):
   `to-spec`, `to-tickets`, `wayfinder`, `implement`, `triage`, `setup-*` → **spec-kit** đã lo pipeline spec→plan→tasks→implement.
   `prototype` → đã có `taste-skill`/`html-anything`.
-- **Cài / dùng** (từ fork đã pin):
+- **Cài / dùng** (từ fork đã pin) — ⏸ **đang hỏng, xem Supply-chain**:
   ```bash
   npx skills add https://github.com/gpaul1999/skills     # cài cả bộ; chỉ dùng nhóm ✅ theo routing ở §0
   ```
